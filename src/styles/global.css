@@ -1,0 +1,15 @@
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+:root { 
+--colorRojo : #e31c1b;
+--colorNaranja : #e38015;
+--colorAmarillo : #ecc85d;
+--colorAmarilloClaro : #f8efb8;
+--colorBlanco : #f8efed;
+
+}
+
+
