@@ -1,6 +1,8 @@
 import { Formik, Form, type FormikValues } from 'formik';
 import InputFormik from '../../../shared/InputFormik';
 import { useNavigate } from 'react-router-dom';
+import Boton from '../../../shared/Boton';
+import { useState } from 'react';
 
 
 interface LoginValores {
@@ -9,12 +11,16 @@ interface LoginValores {
 }
 
 const LoginFormulario = () => {
-    const navigate = useNavigate();
-    const handlePagar = async (values: FormikValues) => {
+    const navigacion = useNavigate();
+    const [cargando, setCargando] = useState(false);
+
+    const handleIniciar = async (values: FormikValues) => {
+        setCargando(true);
         try {
             console.log(values);
-
+            setCargando(false);
         } catch (error) {
+            setCargando(false);
             console.error(error);
         };
     };
@@ -40,7 +46,7 @@ const LoginFormulario = () => {
                 contraseña: '',
             }}
             validate={validar}
-            onSubmit={handlePagar}
+            onSubmit={handleIniciar}
         >
             {({ isSubmitting }) => (
                 <Form>
@@ -59,12 +65,17 @@ const LoginFormulario = () => {
                         placeholder="Introduce tu contraseña"
                     />
 
-                    <button type="submit" disabled={isSubmitting}>
-                        Enviar
-                    </button>
-                    <button onClick={() => navigate("/")}>
-                        Volver al inicio
-                    </button>
+                    <Boton
+                        texto="Iniciar sesión"
+                        tipo="danger"
+                        isSubmitting={isSubmitting}
+                        cargando={cargando}
+                    />
+                    <Boton
+                        texto="Volver"
+                        tipo="primary"
+                        onClick={() => navigacion("/")}
+                    />
 
                 </Form>
             )}

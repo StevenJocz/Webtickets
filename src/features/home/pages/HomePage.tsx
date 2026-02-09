@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import ImagenInicio from '../../../shared/ImagenInicio';
 
 const HomePage = () => {
-    const navigate = useNavigate();
+    const navigacion = useNavigate();
     return (
         <div className={styles.layout}>
             <div className={styles.layout__info}>
@@ -16,15 +16,16 @@ const HomePage = () => {
                     Bienvenido al Sistema de Tickets. Gestiona solicitudes, reporta incidencias y da seguimiento a cada caso de forma rápida y organizada para ofrecer un mejor servicio
                 </p>
                 <div className={styles.layout__opciones}>
-                    <OpcionBoton
-                        icono="logout"
-                        texto="Iniciar Sesión"
-                        onClick={() => navigate("/login")}
-                    />
+                    
                     <OpcionBoton
                         icono="search"
                         texto="Consultar Ticket"
-                        onClick={() => navigate("/consultarticket")}
+                        onClick={() => navigacion("/consultarticket")}
+                    />
+                    <OpcionBoton
+                        icono="logout"
+                        texto="Iniciar Sesión"
+                        onClick={() => navigacion("/login")}
                     />
                 </div>
             </div>
