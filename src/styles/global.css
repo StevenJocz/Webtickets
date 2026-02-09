@@ -3,13 +3,22 @@
   padding: 0;
   margin: 0;
 }
-:root { 
---colorRojo : #e31c1b;
---colorNaranja : #e38015;
---colorAmarillo : #ecc85d;
---colorAmarilloClaro : #f8efb8;
---colorBlanco : #f8efed;
+
+:root {
+  --colorRojo: #e31c1b;
+  --colorNaranja: #e38015;
+  --colorAmarillo: #ecc85d;
+  --colorAmarilloClaro: #f8efb8;
+  --colorBlanco: #f8efed;
 
 }
+
+.Layout {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 
 
