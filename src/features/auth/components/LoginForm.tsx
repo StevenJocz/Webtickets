@@ -2,10 +2,11 @@ import { Formik, Form, type FormikValues } from 'formik';
 import InputFormik from '../../../shared/InputFormik';
 import { useNavigate } from 'react-router-dom';
 import Boton from '../../../shared/Boton';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { login } from '../hook/servicio.auth';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { crearUsuario } from '../../../redux/estado/Usuario';
+import type { RootState } from '../../../redux/configuracionEstado';
 
 
 interface LoginValores {
@@ -13,14 +14,20 @@ interface LoginValores {
     contraseña: string;
 }
 
-
-
 const LoginFormulario = () => {
     const dispatch = useDispatch();
     const navigacion = useNavigate();
     const [cargando, setCargando] = useState(false);
     const [msg, setMsg] = useState('');
     const navigate = useNavigate();
+
+    const usuario = useSelector((state: RootState) => state.usuario);
+
+    useEffect(() => {
+        if (usuario.idUsuario && usuario.token) {
+            navigate("/admin");
+        }
+    }, [usuario, navigate]);
 
     const handleIniciar = async (values: FormikValues) => {
         setCargando(true);

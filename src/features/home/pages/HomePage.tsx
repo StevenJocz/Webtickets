@@ -19,6 +19,11 @@ const HomePage = () => {
                 <div className={styles.layout__opciones}>
                     
                     <OpcionBoton
+                        icono="add_circle"
+                        texto="Crear Ticket"
+                        onClick={() => navigacion(RutasPublicas.crearTicket)}
+                    />
+                    <OpcionBoton
                         icono="search"
                         texto="Consultar Ticket"
                         onClick={() => navigacion(RutasPublicas.consultarTicket)}
