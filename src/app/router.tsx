@@ -5,6 +5,7 @@ import { Provider } from 'react-redux';
 import configuracionEstado from "../redux/configuracionEstado";
 import Autenticacion from "../guards/Autenticacion";
 import { RutasPublicas , RutasPrivadas} from "../models/routes";
+import CrearTicket from "../features/tickets/pages/CrearTicket";
 
 export default function Router() {
     return (
@@ -13,7 +14,7 @@ export default function Router() {
                 <Routes>
                     <Route path={RutasPublicas.home} element={<Home />} />
                     <Route path={RutasPublicas.login} element={<Login />} />
-                    <Route path={RutasPublicas.crearTicket} element={<h1>Crear Ticket</h1>} />
+                    <Route path={RutasPublicas.crearTicket} element={<CrearTicket/>} />
                     <Route path={RutasPublicas.consultarTicket} element={<h1>Consultar Ticket</h1>} />
                     <Route element={<Autenticacion validacionPrivada={true} />}>
                         <Route path={RutasPrivadas.admin} element={<h1>Admin</h1>} />

@@ -3,9 +3,13 @@ import OpcionBoton from '../components/OpcionBoton';
 import { useNavigate } from 'react-router-dom';
 import ImagenInicio from '../../../shared/ImagenInicio';
 import { RutasPublicas } from '../../../models/routes';
+import type { RootState } from '../../../redux/configuracionEstado';
+import { useSelector } from 'react-redux';
 
 const HomePage = () => {
     const navigacion = useNavigate();
+    const usuario = useSelector((state: RootState) => state.usuario);
+    const haySesion = Boolean(usuario?.token);
     return (
         <div className={styles.layout}>
             <div className={styles.layout__info}>
@@ -17,7 +21,7 @@ const HomePage = () => {
                     Bienvenido al Sistema de Tickets. Gestiona solicitudes, reporta incidencias y da seguimiento a cada caso de forma rápida y organizada para ofrecer un mejor servicio
                 </p>
                 <div className={styles.layout__opciones}>
-                    
+
                     <OpcionBoton
                         icono="add_circle"
                         texto="Crear Ticket"
@@ -30,7 +34,7 @@ const HomePage = () => {
                     />
                     <OpcionBoton
                         icono="logout"
-                        texto="Iniciar Sesión"
+                        texto={haySesion ? "Ir al Admin" : "Iniciar Sesión"}
                         onClick={() => navigacion(RutasPublicas.login)}
                     />
                 </div>

@@ -7,6 +7,7 @@ import { login } from '../hook/servicio.auth';
 import { useDispatch, useSelector } from 'react-redux';
 import { crearUsuario } from '../../../redux/estado/Usuario';
 import type { RootState } from '../../../redux/configuracionEstado';
+import { RutasPrivadas, RutasPublicas } from '../../../models/routes';
 
 
 interface LoginValores {
@@ -16,18 +17,17 @@ interface LoginValores {
 
 const LoginFormulario = () => {
     const dispatch = useDispatch();
-    const navigacion = useNavigate();
     const [cargando, setCargando] = useState(false);
     const [msg, setMsg] = useState('');
-    const navigate = useNavigate();
+    const navigacion = useNavigate();
 
     const usuario = useSelector((state: RootState) => state.usuario);
 
     useEffect(() => {
         if (usuario.idUsuario && usuario.token) {
-            navigate("/admin");
+            navigacion(RutasPrivadas.admin);
         }
-    }, [usuario, navigate]);
+    }, [usuario, navigacion]);
 
     const handleIniciar = async (values: FormikValues) => {
         setCargando(true);
@@ -50,7 +50,7 @@ const LoginFormulario = () => {
                 })
             );
             dispatch(crearUsuario({ ...usuario, token }));
-            navigate('/admin');
+            navigacion(RutasPrivadas.admin);
 
         } catch (error) {
             console.error("Error login:", error);
@@ -109,7 +109,7 @@ const LoginFormulario = () => {
                     <Boton
                         texto="Volver"
                         tipo="primary"
-                        onClick={() => navigacion("/")}
+                        onClick={() => navigacion(RutasPublicas.home)}
                     />
 
                 </Form>

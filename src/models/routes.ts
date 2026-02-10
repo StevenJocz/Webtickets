@@ -1,5 +1,5 @@
 export const RutasPublicas = {
-    home: '',
+    home: '/',
     login: '/login',
     consultarTicket: '/consultarticket',
     crearTicket: '/crearticket',
