@@ -3,6 +3,9 @@ import InputFormik from '../../../shared/InputFormik';
 import { useNavigate } from 'react-router-dom';
 import Boton from '../../../shared/Boton';
 import { useState } from 'react';
+import { login } from '../hook/servicio.auth';
+import { useDispatch } from 'react-redux';
+import { crearUsuario } from '../../../redux/estado/Usuario';
 
 
 interface LoginValores {
@@ -10,19 +13,45 @@ interface LoginValores {
     contraseña: string;
 }
 
+
+
 const LoginFormulario = () => {
+    const dispatch = useDispatch();
     const navigacion = useNavigate();
     const [cargando, setCargando] = useState(false);
+    const [msg, setMsg] = useState('');
 
     const handleIniciar = async (values: FormikValues) => {
         setCargando(true);
+
         try {
-            console.log(values);
-            setCargando(false);
+            const response = await login(values.correo, values.contraseña);
+            console.log("Respuesta del login:", response);
+            if (!response.data.respuesta) {
+                setMsg("Usuario o contraseña incorrectos");
+                return;
+            }
+
+            const usuario = response.data.datos;
+            const token = response.data.token;
+
+            dispatch(
+                crearUsuario({
+                    ...usuario,
+                    token,
+                })
+            );
+
+            localStorage.setItem("usuario", JSON.stringify({ ...usuario, token }));
+
+            console.log("Usuario guardado en Redux y LocalStorage");
+
         } catch (error) {
+            console.error("Error login:", error);
+            setMsg("Error al conectar con el servidor");
+        } finally {
             setCargando(false);
-            console.error(error);
-        };
+        }
     };
 
     const validar = (values: LoginValores) => {
@@ -64,7 +93,7 @@ const LoginFormulario = () => {
                         type="password"
                         placeholder="Introduce tu contraseña"
                     />
-
+                    <p>{msg}</p>
                     <Boton
                         texto="Iniciar sesión"
                         tipo="danger"

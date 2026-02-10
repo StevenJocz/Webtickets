@@ -2,6 +2,7 @@ import styles from '../style/Home.module.css'
 import OpcionBoton from '../components/OpcionBoton';
 import { useNavigate } from 'react-router-dom';
 import ImagenInicio from '../../../shared/ImagenInicio';
+import { RutasPublicas } from '../../../models/routes';
 
 const HomePage = () => {
     const navigacion = useNavigate();
@@ -20,12 +21,12 @@ const HomePage = () => {
                     <OpcionBoton
                         icono="search"
                         texto="Consultar Ticket"
-                        onClick={() => navigacion("/consultarticket")}
+                        onClick={() => navigacion(RutasPublicas.consultarTicket)}
                     />
                     <OpcionBoton
                         icono="logout"
                         texto="Iniciar Sesión"
-                        onClick={() => navigacion("/login")}
+                        onClick={() => navigacion(RutasPublicas.login)}
                     />
                 </div>
             </div>
