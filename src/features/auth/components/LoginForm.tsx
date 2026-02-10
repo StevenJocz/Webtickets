@@ -20,6 +20,7 @@ const LoginFormulario = () => {
     const navigacion = useNavigate();
     const [cargando, setCargando] = useState(false);
     const [msg, setMsg] = useState('');
+    const navigate = useNavigate();
 
     const handleIniciar = async (values: FormikValues) => {
         setCargando(true);
@@ -41,10 +42,8 @@ const LoginFormulario = () => {
                     token,
                 })
             );
-
-            localStorage.setItem("usuario", JSON.stringify({ ...usuario, token }));
-
-            console.log("Usuario guardado en Redux y LocalStorage");
+            dispatch(crearUsuario({ ...usuario, token }));
+            navigate('/admin');
 
         } catch (error) {
             console.error("Error login:", error);
