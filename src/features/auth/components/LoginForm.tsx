@@ -1,78 +1,16 @@
-import { Formik, Form, type FormikValues } from 'formik';
+import { Formik, Form } from 'formik';
 import InputFormik from '../../../shared/InputFormik';
-import { useNavigate } from 'react-router-dom';
 import Boton from '../../../shared/Boton';
-import { useEffect, useState } from 'react';
-import { login } from '../hook/servicio.auth';
-import { useDispatch, useSelector } from 'react-redux';
-import { crearUsuario } from '../../../redux/estado/Usuario';
-import type { RootState } from '../../../redux/configuracionEstado';
-import { RutasPrivadas, RutasPublicas } from '../../../models/routes';
+import { validarLogin } from '../hook/Validacion';
+import { useIniciarSesion } from '../hook/useIniciarSesion';
 
 
 interface LoginValores {
     correo: string;
     contraseña: string;
 }
-
 const LoginFormulario = () => {
-    const dispatch = useDispatch();
-    const [cargando, setCargando] = useState(false);
-    const [msg, setMsg] = useState('');
-    const navigacion = useNavigate();
-
-    const usuario = useSelector((state: RootState) => state.usuario);
-
-    useEffect(() => {
-        if (usuario.idUsuario && usuario.token) {
-            navigacion(RutasPrivadas.admin);
-        }
-    }, [usuario, navigacion]);
-
-    const handleIniciar = async (values: FormikValues) => {
-        setCargando(true);
-
-        try {
-            const response = await login(values.correo, values.contraseña);
-            console.log("Respuesta del login:", response);
-            if (!response.data.respuesta) {
-                setMsg("Usuario o contraseña incorrectos");
-                return;
-            }
-
-            const usuario = response.data.datos;
-            const token = response.data.token;
-
-            dispatch(
-                crearUsuario({
-                    ...usuario,
-                    token,
-                })
-            );
-            dispatch(crearUsuario({ ...usuario, token }));
-            navigacion(RutasPrivadas.admin);
-
-        } catch (error) {
-            console.error("Error login:", error);
-            setMsg("Error al conectar con el servidor");
-        } finally {
-            setCargando(false);
-        }
-    };
-
-    const validar = (values: LoginValores) => {
-        const errors: Partial<LoginValores> = {};
-        if (!values.correo) {
-            errors.correo = 'Rellena este campo obligatorio.';
-        }
-        else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.correo)) {
-            errors.correo = 'Correo inválido';
-        }
-        if (!values.contraseña) {
-            errors.contraseña = 'Rellena este campo obligatorio.';
-        }
-        return errors;
-    };
+    const { cargando, msg, handleIniciar } = useIniciarSesion();
 
     return (
         <Formik<LoginValores>
@@ -80,7 +18,7 @@ const LoginFormulario = () => {
                 correo: '',
                 contraseña: '',
             }}
-            validate={validar}
+            validate={validarLogin}
             onSubmit={handleIniciar}
         >
             {({ isSubmitting }) => (
@@ -106,12 +44,6 @@ const LoginFormulario = () => {
                         isSubmitting={isSubmitting}
                         cargando={cargando}
                     />
-                    <Boton
-                        texto="Volver"
-                        tipo="primary"
-                        onClick={() => navigacion(RutasPublicas.home)}
-                    />
-
                 </Form>
             )}
         </Formik>

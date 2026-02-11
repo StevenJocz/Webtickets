@@ -36,6 +36,12 @@
     margin-bottom: 30px;
 }
 
+.layout__opcion .layout__texto span{
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--colorRojo);
+}
+
 .layout__opciones {
     width: 100%;
     display: grid;

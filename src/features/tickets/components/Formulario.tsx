@@ -1,61 +1,70 @@
-import { Form, Formik, type FormikValues } from "formik"
+import { Form, Formik } from "formik"
 import Boton from "../../../shared/Boton"
 import InputFormik from "../../../shared/InputFormik"
-import { useState } from "react";
+import type { CrearTicket } from "../../../models/ticket";
+import SelectFormik from "../../../shared/SelectFormik";
+import { validar } from "../hook/Validacion";
+import { useCrearTicket } from "../hook/useCrearTicket ";
+import { useAreas, usePrioridades } from "../hook/useCatalogo";
 
 
 const Formulario = () => {
-  const [cargando, setCargando] = useState(false);
-  const [msg, setMsg] = useState('');
-
-  const validar = (values: LoginValores) => {
-    const errors: Partial<LoginValores> = {};
-    if (!values.correo) {
-      errors.correo = 'Rellena este campo obligatorio.';
-    }
-    else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.correo)) {
-      errors.correo = 'Correo inválido';
-    }
-    if (!values.contraseña) {
-      errors.contraseña = 'Rellena este campo obligatorio.';
-    }
-    return errors;
-  };
-
-  const handleIniciar = async (values: FormikValues) => {
-          setCargando(true);
-  
-          try {
-             
-  
-          } catch (error) {
-              console.error("Error crear ticket:", error);
-              setMsg("Error al conectar con el servidor");
-          } finally {
-              setCargando(false);
-          }
-      };
+  const { cargando, msg, handleCrearTicket } = useCrearTicket();
+  const { areas } = useAreas();
+  const { prioridades } = usePrioridades();
 
   return (
-    <Formik<LoginValores>
+    <Formik<CrearTicket>
       initialValues={{
-        correo: '',
+        titulo: '',
+        descripcion: '',
+        usuarioId: '',
+        areaId: 0,
+        prioridadId: 0,
+        estadoId: 1
       }}
       validate={validar}
-      onSubmit={handleIniciar}
+      onSubmit={handleCrearTicket}
     >
       {({ isSubmitting }) => (
         <Form>
 
           <InputFormik
-            label='Correo'
-            name="correo"
-            type="email"
-            placeholder="Introduce tu correo electrónico"
+            label='Asunto'
+            name="titulo"
+            type="text"
+            placeholder="Introduce el asunto del ticket"
           />
 
-          
-          <p>{msg}</p>
+          <SelectFormik
+            label="Área"
+            name="areaId"
+            placeholder="Seleccione un área"
+            opciones={areas.map(a => ({
+              valor: a.id,
+              texto: a.nombre
+            }))}
+          />
+
+          <SelectFormik
+            label="Prioridad"
+            name="prioridadId"
+            placeholder="Seleccione una prioridad"
+            opciones={prioridades.map(p => ({
+              valor: p.id,
+              texto: p.nombre
+            }))}
+          />
+
+          <InputFormik
+            label="Descripción"
+            name="descripcion"
+            placeholder="Describe el problema"
+            esTextarea
+            rows={3}
+          />
+          <p className="texto__mesaje">{msg}</p>
+
           <Boton
             texto="Registrar Ticket"
             tipo="danger"

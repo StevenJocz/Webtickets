@@ -1,11 +1,11 @@
 export const RutasPublicas = {
-    home: '/',
-    login: '/login',
-    consultarTicket: '/consultarticket',
-    crearTicket: '/crearticket',
+    login: '/',
 };
 
 export const RutasPrivadas = {
-    admin: 'admin',
-    cliente : 'cliente',
+    home: '/home',
+    consultarTicket: '/consultarticket',
+    crearTicket: '/crearticket',
+    verTickets: '/vertickets',
+    misTickets: '/mistickets',
 };

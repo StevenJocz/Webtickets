@@ -2,7 +2,8 @@ import { useNavigate } from 'react-router-dom';
 import Boton from '../../../shared/Boton'
 import ImagenInicio from '../../../shared/ImagenInicio'
 import styles from '../style/crearTicket.module.css'
-import { RutasPublicas } from '../../../models/routes';
+import { RutasPrivadas } from '../../../models/routes';
+import Formulario from '../components/Formulario';
 
 const CrearTicket = () => {
     const navigacion = useNavigate();
@@ -18,12 +19,12 @@ const CrearTicket = () => {
                     Proporciona la información necesaria para que nuestro equipo pueda atender tu caso de manera rápida y eficiente.
                 </p>
                 <div className={styles.layout__opciones}>
-
+                    <Formulario/>
                 </div>
                 <Boton
                         texto="Volver"
                         tipo="primary"
-                        onClick={() => navigacion(RutasPublicas.home)}
+                        onClick={() => navigacion(RutasPrivadas.home)}
                     />
             </div>
         </div>
