@@ -1,73 +1,103 @@
-# React + TypeScript + Vite
+# 🎫 Sistema de Gestión de Tickets -- Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Frontend del **Sistema de Gestión de Tickets** desarrollado con
+**React + TypeScript + Vite**.\
+Consume una **API REST en .NET Core 8 con PostgreSQL**, utilizando
+autenticación **JWT** y una arquitectura modular escalable.
 
-Currently, two official plugins are available:
+------------------------------------------------------------------------
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 🚀 Tecnologías Utilizadas
 
-## React Compiler
+-   ⚛️ React 18\
+-   ⚡ Vite\
+-   🧠 TypeScript\
+-   🎨 CSS Modules\
+-   📡 Axios\
+-   🗃️ Redux Toolkit\
+-   📝 Formik + Yup (validación de formularios)
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+------------------------------------------------------------------------
 
-## Expanding the ESLint configuration
+## 📦 Instalación y Configuración
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+### 2️⃣ Instalar dependencias
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+``` bash
+npm install
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+### 3️⃣ Configurar la URL de la API
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+Edita el archivo:
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+``` bash
+src/models/servicio.ts
 ```
+
+Ejemplo:
+
+``` ts
+export const servicio = {
+  api: 'http://localhost:5059/api'
+};
+```
+
+------------------------------------------------------------------------
+
+## ▶️ Ejecutar el proyecto
+
+``` bash
+npm run dev
+```
+
+La aplicación estará disponible en:
+
+    http://localhost:5173
+
+------------------------------------------------------------------------
+
+## 🗂️ Estructura del Proyecto
+
+    src/
+    │
+    ├── app/              # Configuración principal de la app
+    ├── assets/           # Imágenes y recursos estáticos
+    ├── features/          # Módulos por dominio
+    │   ├── auth/          # Autenticación
+    │   └── tickets/        # Gestión de tickets
+    ├── guards/            # Guards de rutas (AuthGuard, etc.)
+    ├── models/            # Interfaces y modelos TypeScript
+    ├── redux/              # Store y slices globales
+    ├── service/            # Servicios HTTP y API
+    ├── shared/              # Componentes reutilizables
+    ├── styles/              # Estilos globales
+    └── main.tsx             # Punto de entrada de la aplicación
+
+------------------------------------------------------------------------
+
+## 🔐 Autenticación
+
+El token se almacena en **LocalStorage** y se gestiona mediante **Redux
+Toolkit**, permitiendo proteger rutas con **Route Guards**.
+
+------------------------------------------------------------------------
+
+## 📌 Características
+
+-   🎫 Creación y consulta de tickets\
+-   🧩 Arquitectura modular por features\
+-   📝 Formularios con Formik y validaciones con Yup\
+-   🗃️ Manejo de estado global con Redux Toolkit\
+-   🧼 Código limpio y escalable
+
+------------------------------------------------------------------------
+
+## 🧑‍💻 Autor
+
+**SHamilton Espinal**\
+Desarrollador de Software \| React \| .NET \| PostgreSQL
+
+------------------------------------------------------------------------
+
